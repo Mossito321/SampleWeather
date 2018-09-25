@@ -29,4 +29,13 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         fragmentTransaction.commit()
     }
+
+    override fun onBackPressed() {
+        var count = fragmentManager.backStackEntryCount
+        if (count == 0) {
+            finish()
+        } else {
+            fragmentManager.popBackStack()
+        }
+    }
 }
