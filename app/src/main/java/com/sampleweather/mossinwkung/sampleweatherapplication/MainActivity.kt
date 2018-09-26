@@ -8,6 +8,7 @@ import android.view.Window
 import com.sampleweather.mossinwkung.sampleweatherapplication.presentation.weather.WeatherMainFragment
 
 class MainActivity : AppCompatActivity() {
+    var fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         var weatherFragment = WeatherMainFragment.Companion.newInstance()
 
         setupFragment(weatherFragment)
+
     }
 
-    private fun setupFragment(fragment: Fragment) {
-        var fragmentManager = supportFragmentManager
+    fun setupFragment(fragment: Fragment) {
         var fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.contentFrame, fragment)
         fragmentTransaction.addToBackStack(fragment.toString())
@@ -31,11 +32,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        var count = fragmentManager.backStackEntryCount
-        if (count == 0) {
+        if (fragmentManager.backStackEntryCount == 1) {
             finish()
         } else {
-            fragmentManager.popBackStack()
+            super.onBackPressed()
         }
     }
+
 }

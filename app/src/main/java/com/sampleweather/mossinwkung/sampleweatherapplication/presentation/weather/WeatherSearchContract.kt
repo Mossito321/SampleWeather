@@ -2,7 +2,7 @@ package com.sampleweather.mossinwkung.sampleweatherapplication.presentation.weat
 
 import com.sampleweather.mossinwkung.sampleweatherapplication.response.WeatherResponse
 
-interface WeatherMainContract {
+interface WeatherSearchContract {
     interface View {
         fun showOutput(response: WeatherResponse)
         fun showLoading()
