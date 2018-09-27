@@ -1,6 +1,7 @@
 package com.sampleweather.mossinwkung.sampleweatherapplication.presentation.weather
 
 import com.sampleweather.mossinwkung.sampleweatherapplication.api.APIInterface
+import com.sampleweather.mossinwkung.sampleweatherapplication.response.WeatherListResponse
 import com.sampleweather.mossinwkung.sampleweatherapplication.response.WeatherResponse
 import io.reactivex.Observable
 import java.util.*
@@ -16,6 +17,9 @@ interface WeatherProvider {
     fun getWeatherByCity(city: String, degree: String):
             Observable<WeatherResponse>
 
+    fun getListWeatherByCity(city: String, degree: String):
+            Observable<WeatherListResponse>
+
 }
 
 class WeatherProviderImpl(
@@ -23,9 +27,16 @@ class WeatherProviderImpl(
 ) : WeatherProvider {
 
     override fun getWeatherByCity(city: String, degree: String): Observable<WeatherResponse> {
-        return api.getLocationByCity(q = city,
+        return api.getWeatherByCity(q = city,
                 units = degree,
                 appId = WeatherParams.API_KEY)
     }
+
+    override fun getListWeatherByCity(city: String, degree: String): Observable<WeatherListResponse> {
+        return api.getWeatherListByCity(q = city,
+                units = degree,
+                appId = WeatherParams.API_KEY)
+    }
+
 }
 

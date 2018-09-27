@@ -47,7 +47,7 @@ class Main {
     var temp: Double? = null
 
     @SerializedName("pressure")
-    var pressure: Int? = null
+    var pressure: Double? = null
 
     @SerializedName("humidity")
     var humidity: Int? = null

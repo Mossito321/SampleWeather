@@ -8,7 +8,7 @@ import android.view.Window
 import com.sampleweather.mossinwkung.sampleweatherapplication.presentation.weather.WeatherMainFragment
 
 class MainActivity : AppCompatActivity() {
-    var fragmentManager = supportFragmentManager
+    private var fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

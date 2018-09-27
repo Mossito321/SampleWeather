@@ -5,39 +5,33 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 const val FORMAT_API = "yyyy-MM-dd HH:mm:ss"
+const val FORMAT_API_24_HOUR = "yyyy-MM-dd HH:mm:ss a"
 
-fun String?.toDate(dateFormat: String = FORMAT_API): Date {
-    try {
-        val sdf = SimpleDateFormat(dateFormat, Locale.getDefault())
-        val date = sdf.parse(this)
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-        return calendar.time
-    } catch (e: ParseException) {
-        //For exception ,Will return Date() (current time on the device)
-        return Date()
-    } catch (e: NullPointerException) {
-        //For exception ,Will return Date() (current time on the device)
-        return Date()
-    }
+fun String.checkOneDay(): Boolean {
+    val dateFormat = SimpleDateFormat(FORMAT_API, Locale.getDefault())
+    val timeZone = TimeZone.getDefault()
+    dateFormat.timeZone = TimeZone.getTimeZone(timeZone.displayName)
+
+    var calendar = Calendar.getInstance()
+    calendar.add(Calendar.HOUR, 24)
+    val currentTime = Calendar.getInstance().time
+    val nextDay = calendar.time
+    val dataDate = dateFormat.parse(this)
+
+    return nextDay.time > dataDate.time && dataDate.time > currentTime.time
 }
 
-fun String?.toDatePlusHour(dateFormat: String = FORMAT_API, hour: Int = 0): Date {
-    try {
-        val sdf = SimpleDateFormat(dateFormat, Locale.getDefault())
+fun String.changeFormatDate(): String {
+    var newDateFormat = ""
 
-        val date = sdf.parse(this)
+    val readDateFormat = SimpleDateFormat(FORMAT_API, Locale.getDefault())
+    val writeDateFormat = SimpleDateFormat(FORMAT_API_24_HOUR, Locale.ENGLISH)
 
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-        calendar.add(Calendar.HOUR, hour)
+    var date = readDateFormat.parse(this)
 
-        return calendar.time
-    } catch (e: ParseException) {
-        //For exception ,Will return Date() (current time on the device)
-        return Date()
-    } catch (e: NullPointerException) {
-        //For exception ,Will return Date() (current time on the device)
-        return Date()
+    if (date != null) {
+        newDateFormat = writeDateFormat.format(date)
     }
+
+    return newDateFormat
 }
